@@ -7,6 +7,53 @@
     width: 200px;
     margin-bottom: 4px;
   }
+
+  input:disabled,
+  select:disabled {
+    cursor: not-allowed;
+  }
+
+  #lblShowHistory {
+    margin-top: 20px;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: -10px;
+    font-size: 14px;
+  }
+
+  .collapse {
+    cursor: pointer;
+    display: block;
+    background: #cdf;
+  }
+
+  .collapse+input {
+    display: none;
+    /* hide the checkboxes */
+  }
+
+  .collapse+input+div {
+    display: none;
+  }
+
+  .collapse+input:checked+div {
+    display: block;
+  }
+
+  #consoleHistory {
+    word-break: break-all !important;
+
+    /* keep whitespace but force new lines*/
+    white-space: pre-wrap;
+    text-align: left;
+    width: 90%;
+
+
+    margin-left: 10%;
+    width: 80%;
+    background: #f0f0f3;
+    border: 1px solid #b6b5bb;
+  }
 </style>
 
 <body style="background: #d6d5dc; text-align: center" onkeydown="return (event.keyCode != 116)">
@@ -55,6 +102,12 @@
         Screenshot:
       </p>
       <img id="target" src="white.png" height="480">
+
+      <label id="lblShowHistory" class="collapse" for="_1">Show Console History</label>
+      <input id="_1" type="checkbox">
+      <div>
+        <pre id="consoleHistory"></pre>
+      </div>
 
       <script src="screenshot.js"></script>
 

@@ -12,7 +12,7 @@ var consoleHistory;
 
 function setScreenshotUrl(url) {
   // if we have data i.e. the user didn't refresh. Prevent a refresh
-  window.onbeforeunload = function () { return false; }
+  // window.onbeforeunload = function () { return false; }
 
   document.getElementById('frmBugReport').style.display = "block";
   document.getElementById('frmNoReport').style.display = "none";
@@ -24,6 +24,7 @@ function setConsoleHistory(history) {
   console.log("setting history to", history);
   consoleHistory = history;
   document.getElementById("consoleHistoryCount").innerText = history.length;
+  document.getElementById("consoleHistory").innerText = JSON.stringify(history, null, 2);// pretty print
 }
 
 document.getElementById("btnSubmit").addEventListener("click", submit);
@@ -56,5 +57,4 @@ function submit() {
   console.log("console.history: " + consoleHistory.length);
 
   button.innerText = "Submitted!";
-
 }
