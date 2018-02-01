@@ -14,10 +14,10 @@ A basic chrome extension that adds a 'debug button' for submitting help requests
 ## Event lifecycle
 
 - JavaScript is injected on page load of any URLs specified in the manifest.json
-- When clicking the 'bug button', the `chrome.pageAction.onClicked` gets triggered and sends a 'RequestConsoleHistory' event to the users window (i.e. Phoenix)
-- The code we've injected into phoenix (see phoenix.js) receives this event & sends a new event: 'SendConsoleHistory' with the console history we gathered by overridding the console object using a plugin: [console-history](https://github.com/lesander/console.history/).
-- The content_script receives the SendConsoleHistory event and passes the event along to our chrome background process (see background.js)
-- Our listener in background.js is triggered & takes a screenshot using the captureVisibleTab API and then opens our 'screenshot.html' view 
+- When clicking the 'bug button', our `chrome.pageAction.onClicked` gets triggered in `background.js` and sends a `RequestConsoleHistory` event to the users window (i.e. Phoenix)
+- The code we've injected into phoenix (see `phoenix.js`) receives this event & sends a new event: `SendConsoleHistory` with the console history we gathered by overridding the console object using a plugin: [console-history](https://github.com/lesander/console.history/).
+- The content_script receives the `SendConsoleHistory` event and passes the event along to our chrome background process (see `background.js`)
+- Our listener in `background.js` is triggered & takes a screenshot using the captureVisibleTab API and then opens our `screenshot.html` view 
 - The user sees a beautiful form they can fill in & would submit to a endpoint (when implemented)
 
 
