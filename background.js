@@ -2,6 +2,29 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
+// When the extension is installed or upgraded ...
+chrome.runtime.onInstalled.addListener(function() {
+  // Replace all rules ...
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    // With a new rule ...
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        // That fires when a page's URL contains a 'g' ...
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            // pageUrl: { urlContainsMatches: 'phoenix' },
+            pageUrl: { urlMatches: '(phoenix|localhost:6701)' },
+          })
+        ],
+        // And shows the extension's page action.
+        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+      }
+    ]);
+  });
+});
+
+
 // To make sure we can uniquely identify each screenshot tab, add an id as a
 // query param to the url that displays the screenshot.
 // Note: It's OK that this is a global variable (and not in localStorage),
@@ -10,7 +33,7 @@
 var id = 100;
 
 // Listen for a click on the camera icon. On that click, take a screenshot.
-chrome.browserAction.onClicked.addListener(function() {
+chrome.pageAction.onClicked.addListener(function() {
 
   chrome.tabs.captureVisibleTab(function(screenshotUrl) {
     var viewTabUrl = chrome.extension.getURL('screenshot.html?id=' + id++)
