@@ -1,10 +1,48 @@
 <html>
-<script src="screenshot.js"></script>
-<body>
-  Image here:
+<style>
+  input,
+  select {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    margin-bottom: 4px;
+  }
+</style>
+
+<body style="background: #d6d5dc; text-align: center">
+
+  <div style="text-align: center">
+
+    <select id="selCategory">
+      <option value="" disabled selected>Category</option>
+
+      <option>Customer</option>
+      <option val="2">Call Centre</option>
+      <option>Other</option>
+    </select>
+
+    <select id="selSubCategory" style="display:none">
+      <option value="" disabled selected>Sub Category</option>
+
+      <option>Dropped call</option>
+      <option>One way audio</option>
+      <option>Other</option>
+    </select>
+
+    <input type="text" id="txtReason" placeholder="please enter a description" />
+
+    <button id="btnSubmit">Submit</button>
+
+  </div>
+
+  <br>
+
   <p>
-    <img id="target" src="white.png" height="480">
-  <p>
-  End image
-  </body>
+    Screenshot:
+  </p>
+  <img id="target" src="white.png" height="480">
+
+  <script src="screenshot.js"></script>
+</body>
+
 </html>
