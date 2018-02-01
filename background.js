@@ -51,31 +51,31 @@ chrome.pageAction.onClicked.addListener(function () {
   chrome.tabs.executeScript({
     code: script
   });
+});
 
-  chrome.extension.onMessage.addListener(function (message, sender, sendResponse) {
-    //do something that only the extension has privileges here
-    // console.log("received message from contentscript");
-    // console.log(message);
+// Listen to the event from our content script
+chrome.extension.onMessage.addListener(function (message, sender, sendResponse) {
+  //do something that only the extension has privileges here
+  // console.log("received message from contentscript");
+  // console.log(message);
 
-    if (message.name === "SendConsoleHistory") {
-      console.log("SendConsoleHistory received", message.history.length + " messages found");
-    }
+  if (message.name === "SendConsoleHistory") {
+    console.log("SendConsoleHistory received", message.history.length + " messages found");
+    captureVisibleTab(message.history);
+  }
 
-    return true;
-  });
+  return true;
+});
 
 
 
-  // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  //   chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
-  //     console.log("received message in extension from content script", response.farewell);
-  //   });
-  // });
+// chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+//   chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
+//     console.log("received message in extension from content script", response.farewell);
+//   });
+// });
 
-  return
-
-  // TODO chain these functions together
-  var consoleHistory = [];
+function captureVisibleTab(consoleHistory) {
 
   chrome.tabs.captureVisibleTab(function (screenshotUrl) {
     var viewTabUrl = chrome.extension.getURL('screenshot.html?id=' + id++)
@@ -112,7 +112,7 @@ chrome.pageAction.onClicked.addListener(function () {
       targetId = tab.id;
     });
   });
-});
+}
 
 // chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 //   alert("message received");

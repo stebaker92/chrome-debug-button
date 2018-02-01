@@ -2,14 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
+document.getElementById('frmBugReport').style.display = "none";
+document.getElementById('frmNoReport').style.display = "block";
+document.getElementById('btnClose').addEventListener("click", function () { window.close(); });
+
+
 var consoleHistory;
 
 function setScreenshotUrl(url) {
+  // if we have data i.e. the user didn't refresh. Prevent a refresh
+  window.onbeforeunload = function () { return false; }
+
+  document.getElementById('frmBugReport').style.display = "block";
+  document.getElementById('frmNoReport').style.display = "none";
+
   document.getElementById('target').src = url;
 }
 
 function setConsoleHistory(history) {
+  console.log("setting history to", history);
   consoleHistory = history;
+  document.getElementById("consoleHistoryCount").innerText = history.length;
 }
 
 document.getElementById("btnSubmit").addEventListener("click", submit);
@@ -31,6 +45,8 @@ function submit() {
   var text = document.getElementById("txtReason").value;
 
   console.log("reason: " + text);
+
+  document.getElementById("frmBugReportFieldset").disabled = true;
 
   button.disabled = true;
 

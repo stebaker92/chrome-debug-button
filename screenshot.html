@@ -9,40 +9,58 @@
   }
 </style>
 
-<body style="background: #d6d5dc; text-align: center">
+<body style="background: #d6d5dc; text-align: center" onkeydown="return (event.keyCode != 116)">
 
-  <div style="text-align: center">
-
-    <select id="selCategory">
-      <option value="" disabled selected>Category</option>
-
-      <option>Customer</option>
-      <option val="2">Call Centre</option>
-      <option>Other</option>
-    </select>
-
-    <select id="selSubCategory" style="display:none">
-      <option value="" disabled selected>Sub Category</option>
-
-      <option>Dropped call</option>
-      <option>One way audio</option>
-      <option>Other</option>
-    </select>
-
-    <input type="text" id="txtReason" placeholder="please enter a description" />
-
-    <button id="btnSubmit">Submit</button>
-
+  <div id="frmNoReport">
+    <h2>Data has been lost</h2>
+    <a id="btnClose" href="#">Close this window</a>
   </div>
 
-  <br>
+  <form id="frmBugReport">
 
-  <p>
-    Screenshot:
-  </p>
-  <img id="target" src="white.png" height="480">
+    <fieldset id="frmBugReportFieldset">
+      <h2>Submit a bug request</h2>
 
-  <script src="screenshot.js"></script>
+      <div style="text-align: center">
+
+        <p>Console History items captured:
+          <b id="consoleHistoryCount"></b>
+        </p>
+
+        <select id="selCategory">
+          <option value="" disabled selected>Category</option>
+
+          <option>Customer</option>
+          <option val="2">Call Centre</option>
+          <option>Other</option>
+        </select>
+
+        <select id="selSubCategory" style="display:none">
+          <option value="" disabled selected>Sub Category</option>
+
+          <option>Dropped call</option>
+          <option>One way audio</option>
+          <option>Other</option>
+        </select>
+
+        <input type="text" id="txtReason" placeholder="please enter a description" />
+
+        <button id="btnSubmit">Submit</button>
+
+      </div>
+
+      <br>
+
+      <p>
+        Screenshot:
+      </p>
+      <img id="target" src="white.png" height="480">
+
+      <script src="screenshot.js"></script>
+
+    </fieldset>
+  </form>
+
 </body>
 
 </html>
