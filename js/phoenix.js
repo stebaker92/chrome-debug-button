@@ -17,39 +17,18 @@ console._intercept = function (type, args) {
     console._collect(type, args)
 }
 
-// window.consoleTest = function (args) {
-//     if (consoleBuffer.length > 100) {
-//         consoleBuffer.unshift();
-//     }
-
-//     consoleBuffer.push(args);
-
-//     console.log(args);
-
-//     // Send the message to our extension if it exists
-//     // chrome.runtime.sendMessage({ greeting: "hello" }, function (response) {
-//     //     console.log(response.farewell);
-//     // });
-// }
-
-// consoleTest && 
 window.console.warn("Test - phoenix app run.js", "test");
-
 
 window.getAndSendConsoleHistory = function () {
     sendToContentScript();
 }
 
 function sendToContentScript() {
-    // var event = document.createEvent('Event');
-    // event.initEvent('hello');
-    // document.dispatchEvent(event);
-
     console.log("[phoenix] sending SendConsoleHistory customEvent")
 
     // Create a CustomEvent so we can attach data
 
-    // deprecated
+    // this doesn't work! - deprecated
     // var evt = document.createEvent("CustomEvent");
     // evt.initCustomEvent("SendConsoleHistory", true, true, { detail: window.console.history });
     // document.dispatchEvent(evt);

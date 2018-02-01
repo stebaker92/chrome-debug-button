@@ -1,4 +1,4 @@
-// From this file, we have full access to the DOM, but not the window object.
+// From this file, we have full access to the DOM, but not the window object, which we need for the console
 // https://stackoverflow.com/questions/20499994/access-window-variable-from-content-script
 
 console.log("This is the injected content script!");
