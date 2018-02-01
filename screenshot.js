@@ -2,8 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+var consoleHistory;
+
 function setScreenshotUrl(url) {
   document.getElementById('target').src = url;
+}
+
+function setConsoleHistory(history) {
+  consoleHistory = history;
 }
 
 document.getElementById("btnSubmit").addEventListener("click", submit);
@@ -27,6 +33,11 @@ function submit() {
   console.log("reason: " + text);
 
   button.disabled = true;
+
+  // Uploading base64 encoded image
+  var base64image = document.getElementById('target').attr;
+
+  console.log("console.history: " + consoleHistory.length);
 
   button.innerText = "Submitted!";
 

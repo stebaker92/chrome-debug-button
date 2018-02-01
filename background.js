@@ -4,9 +4,9 @@
 
 
 // When the extension is installed or upgraded ...
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function () {
   // Replace all rules ...
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     // With a new rule ...
     chrome.declarativeContent.onPageChanged.addRules([
       {
@@ -18,7 +18,7 @@ chrome.runtime.onInstalled.addListener(function() {
           })
         ],
         // And shows the extension's page action.
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+        actions: [new chrome.declarativeContent.ShowPageAction()]
       }
     ]);
   });
@@ -33,9 +33,51 @@ chrome.runtime.onInstalled.addListener(function() {
 var id = 100;
 
 // Listen for a click on the camera icon. On that click, take a screenshot.
-chrome.pageAction.onClicked.addListener(function() {
+chrome.pageAction.onClicked.addListener(function () {
 
-  chrome.tabs.captureVisibleTab(function(screenshotUrl) {
+  // Ask the tab for a log of their console
+
+  var script = `//getAndSendConsoleHistory();
+  
+  var event = document.createEvent('Event');
+  event.initEvent('RequestConsoleHistory');
+  document.dispatchEvent(event);
+  `;
+  // See https://developer.chrome.com/extensions/tabs#method-executeScript.
+  // chrome.tabs.executeScript allows us to programmatically inject JavaScript
+  // into a page. Since we omit the optional first argument "tabId", the script
+  // is inserted into the active tab of the current window, which serves as the
+  // default.
+  chrome.tabs.executeScript({
+    code: script
+  });
+
+  chrome.extension.onMessage.addListener(function (message, sender, sendResponse) {
+    //do something that only the extension has privileges here
+    // console.log("received message from contentscript");
+    // console.log(message);
+
+    if (message.name === "SendConsoleHistory") {
+      console.log("SendConsoleHistory received", message.history.length + " messages found");
+    }
+
+    return true;
+  });
+
+
+
+  // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  //   chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
+  //     console.log("received message in extension from content script", response.farewell);
+  //   });
+  // });
+
+  return
+
+  // TODO chain these functions together
+  var consoleHistory = [];
+
+  chrome.tabs.captureVisibleTab(function (screenshotUrl) {
     var viewTabUrl = chrome.extension.getURL('screenshot.html?id=' + id++)
     var targetId = null;
 
@@ -60,13 +102,18 @@ chrome.pageAction.onClicked.addListener(function() {
         var view = views[i];
         if (view.location.href == viewTabUrl) {
           view.setScreenshotUrl(screenshotUrl);
+          view.setConsoleHistory(consoleHistory);
           break;
         }
       }
     });
 
-    chrome.tabs.create({url: viewTabUrl}, function(tab) {
+    chrome.tabs.create({ url: viewTabUrl }, function (tab) {
       targetId = tab.id;
     });
   });
 });
+
+// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+//   alert("message received");
+// });
