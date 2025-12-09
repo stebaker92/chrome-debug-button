@@ -1,7 +1,7 @@
 {
   "name": "Debug Button",
   "version": "0.1",
-  "description": "Adds a debug button",
+  "description": "Adds a debug button to help debug internal web apps",
   "background": {
     "persistent": false,
     "scripts": [
@@ -23,10 +23,7 @@
         "content_script.js"
       ],
       "matches": [
-        "http://localhost:6701/*",
-        "https://phoenix.carfinance247.co.uk/*",
-        "http://phoenix.replica.cf247.net/*",
-        "https://phoenix.qa.cf247.net/*"
+        "http://localhost:6701/*"
       ],
       "run_at": "document_idle"
     }
